@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*.ipynb
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.py[cod]
+*.egg-info/
+README.md
+setup.cfg
+
+# Setup notes
+setup_notes.md

@@ -1,43 +1,32 @@
-from distutils.core import setup
+import os
+from setuptools import setup
 
-import tokenize, pydoc
-
-def get_module_meta(modfile):
-    docstring = None
-    version = [(tokenize.NAME, '__version__'), (tokenize.OP, '=')]
-    f = open(modfile,'r')
-    for toknum, tokval, _, _, _ in tokenize.generate_tokens(lambda: f.readline()):
-        if not docstring:
-            if toknum == tokenize.STRING:
-                docstring = tokval
-                continue
-        if len(version):
-            if (toknum, tokval) == version[0]:
-                version.pop(0)
-        else:
-            version = tokval
-            break
-    if docstring is None:
-        raise ValueError("could not find docstring in %s" % modfile)
-    if not isinstance(version, basestring):
-        raise ValueError("could not find __version__ in %s" % modfile)
-    # unquote :
-    docstring = docstring[3:]
-    docstring = docstring[:-3]
-    version = version[1:]
-    version = version[:-1]
-    return (version,) + pydoc.splitdoc(docstring)
-
-version, description, long_description = get_module_meta("./scholar/__init__.py")
+def readfile(*paths):
+    """Build a file path from *paths* and return the contents."""
+    with open(os.path.join(*paths), 'r') as f:
+        return f.read()
 
 setup(
-        name='GoogleScholar',
-        version='0.2',
-        description='Fetch information from Google Scholar',
-        author='Luciano Bello',
-        author_email='luciano (a) debian (.) org',
-        url='https://github.com/lbello/chalmers-web/tree/master/scholar',
-        packages=['scholar',],
-        license='Do What the Fuck You Want to Public License',
-        long_description=long_description,
+    name = 'scholarly',
+    py_modules = ['scholarly'],
+    version = '0.2.1',
+    description = 'Simple access to Google Scholar authors and citations',
+    long_description=(readfile('README.rst')),
+    license='Unlicense',
+
+    author = 'Steven A. Cholewiak',
+    author_email = 'steven@cholewiak.com',
+    url = 'https://github.com/OrganicIrradiation/scholarly',
+    download_url = 'https://github.com/OrganicIrradiation/scholarly/tarball/v0.2',
+    keywords = ['Google Scholar', 'academics', 'citations'],
+    classifiers = [
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Libraries :: Python Modules'],
+    install_requires=['arrow', 'beautifulsoup4', 'bibtexparser', 'requests[security]'],
+    test_suite="test.py"
 )
