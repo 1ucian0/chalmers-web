@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+*.doctree
+*.pickle
+
+# Distribution / packaging
+.Python
+build/
+_build/
+dist/
+*.egg-info/
+setup.cfg
+
+# Setup notes
+setup_notes.md
+.ipynb_checkpoints
+*.ipynb
+.idea
+
+#logging
+*.log
+
+
+#dev testing
+vic.py
+.env
+.vscode/settings.json
+test.py
